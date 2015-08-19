@@ -19,6 +19,8 @@ public class RecyclerActivity extends AppCompatActivity {
 
     private ArrayList<Buddy> mBuddies;
     RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,46 +29,41 @@ public class RecyclerActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
-        //If you are sure that the size of the RecyclerView won't be changing,
-        // you can add the following line to improve performance
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         initializeData();
 
         // set the adapter to the Recycler View
-        BuddyAdapter adapter = new BuddyAdapter(mBuddies);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new BuddyAdapter(mBuddies);
+        mRecyclerView.setAdapter(mAdapter);
 
-        //Set the layout manager
+        // use a linear layout manager or other LayoutManager
         /**
-         * for the linear layout vertical or horizontal check this:
+         * for the LinearLayoutManager vertical or horizontal check this:
          * https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager.html#LinearLayoutManager(android.content.Context, android.util.AttributeSet, int, int)
          *
          */
         int flag = getIntent().getExtras().getInt(EXTRA_FLAG);
         switch (flag) {
             case FLAG_VERTICAL:
-
-                LinearLayoutManager llmv = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                mRecyclerView.setLayoutManager(llmv);
+                mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                 break;
             case FLAG_HORIZONTAL:
-                LinearLayoutManager llmh = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-                mRecyclerView.setLayoutManager(llmh);
+                mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 break;
             case FLAG_GRID:
-                GridLayoutManager glm = new GridLayoutManager(this, 2);
-                mRecyclerView.setLayoutManager(glm);
+                mLayoutManager = new GridLayoutManager(this, 2);
                 break;
             case FLAG_STAGGERED_GRID:
-                StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-                mRecyclerView.setLayoutManager(sglm);
+                mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                 break;
-
-
+            default:
+                mLayoutManager = new LinearLayoutManager(this);
+                break;
         }
-
-
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     /**
