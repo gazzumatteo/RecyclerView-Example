@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RecyclerView Example</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_label_horizontal_list">RecyclerView Horizontal List</string>
+    <string name="btn_label_vertical_list">RecyclerView Vertical List</string>
+    <string name="btn_label_grid_list">RecyclerView Grid List</string>
+    <string name="btn_label_staggered_grid_list">RecyclerView Staggered Grid  List</string>
+    <string name="title_activity_recycler">RecyclerActivity</string>
+</resources>
